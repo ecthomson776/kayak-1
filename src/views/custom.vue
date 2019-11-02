@@ -25,7 +25,7 @@
           <v-divider></v-divider>
         </v-card> -->
 
-        <v-card class="pa-3">
+        <!-- <v-card class="pa-3">
             <v-flex xs12 m2 class="px-3">
                 <v-radio-group class="pa-3" >
                     <template v-slot:label>
@@ -38,9 +38,105 @@
                     </v-radio-group>
 
             </v-flex>
-        </v-card>
-        
+        </v-card> -->
+
+      <v-card>
+       <!-- <v-card-title>
+        Kayak Selection
+        <v-spacer></v-spacer> -->
+      <v-radio-group class="xs-12 m-6" v-model="colour">
+              <v-radio
+                label="red"
+                color="red"
+                value="red"
+              ></v-radio>
+              <v-radio
+                label="blue"
+                color="blue"
+                value="blue"
+              ></v-radio>
+              <v-radio
+                label="yellow"
+                color="yellow"
+                value="yellow"
+              ></v-radio>
+              <v-radio
+                label="grey"
+                color="grey"
+                value="grey"
+              ></v-radio>
+              <v-radio
+                label="pink"
+                color="pink"
+                value="pink"
+              ></v-radio>
+              <v-radio
+                label="green"
+                color="green"
+                value="green"
+              ></v-radio>
+              </v-radio-group>  
+               <v-btn @click='getkayaks'>Get Records</v-btn>
+          
+      </v-card>  
     </v-container>
+
+    <v-card
+    class="mx-auto"
+    max-width=500
+  >
+    
+
+    
+
+    <v-container fluid>
+      <v-row dense>
+        <v-col
+          v-for="kayak in colour_test_01"
+          :key="kayak.id"
+          :cols=12
+        >
+          <v-card >
+            <v-img
+              :src="colour_test_01.image"
+              class="white--text align-end"
+              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+              height="250px"
+            >
+              <v-card-title ></v-card-title>
+            </v-img>
+            <!-- <p class="text-left">Model No: <v-card-text class="text--primary" v-text="kayak.id">
+            </v-card-text></p>
+
+            <p class="text--primary"> Length: <v-card-text class="text--primary" v-text="kayak.length"> ellow
+            </v-card-text></p>
+            <p class="text--primary"> Width:<v-card-text class="text--primary" v-text="kayak.width">
+            </v-card-text></p>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+
+              <v-btn @click="snackbar = true" icon>
+                <v-icon>mdi-basket</v-icon>
+              </v-btn>
+              <v-snackbar
+                v-model="snackbar"
+              >
+                {{ inbasketmessage }}
+              <v-btn
+                color="pink"
+                text
+                @click="snackbar = false"
+              >
+                Close
+              </v-btn>
+              </v-snackbar>
+              </v-card-actions> -->
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-card>
   </div>
  
 </template>
@@ -52,29 +148,42 @@ import db from '@/fb'
 export default {
   data() {
     return {
+      colour: '',
+      singleSelect: true,
       colour_test_01: []
     }
   },
-  methods: {
-    changeImage: function() {
-      console.log(colour_test_01.colour)
-    }
-  },
+  // methods: {
+  //   changeImage: function() {
+  //     console.log(colour_test_01.colour)
+  //   }
+  // },
  
-  created () {
-    db.collection('colour_test_01').onSnapshot(res => {
-      const changes = res.docChanges();
+  // created () {
+  //   db.collection('colour_test_01').onSnapshot(res => {
+  //     const changes = res.docChanges();
 
-      changes.forEach(change => {
-        if (change.type === 'added') {
-          this.colour_test_01.push({
-            ...change.doc.data(),
-            id: change.doc.id
-          })
-        }
+  //     changes.forEach(change => {
+  //       if (change.type === 'added') {
+  //         this.colour_test_01.push({
+  //           ...change.doc.data(),
+  //           id: change.doc.id
+  //         })
+  //       }
+  //     })
+  //   })
+  // }
+  methods: {getkayaks () {
+     this.colour_test_01=[]
+     db.collection('colour_test_01').where('colour','==',this.colour).get()
+    .then(snapshot => {
+      snapshot.forEach(doc =>{
+        let kayak = doc.data()
+        kayak.id = doc.id
+        this.colour_test_01.push(kayak)
       })
     })
-  }
-}
+  } 
+}}
 
 </script>
