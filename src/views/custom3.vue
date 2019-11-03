@@ -1,19 +1,22 @@
 <template>
   <div class="custom">
     <h1 class="ml-12 pa-3">Kayak Customiser</h1>
-    <v-container class='my-5'>
+    <p> hello</p>
+    <v-container fluid class='my-5'>
       <v-card xs12 md6>
        <!-- <v-card-title>
         Kayak Selection
         <v-spacer></v-spacer> -->
-        
-      <v-flex wrap>
+        <v-layout row wrap class="pa-3">
+      
       <v-radio-group  v-model="colour" class="pa-3" row label="colour">
+          <v-flex xs12 md6>
               <v-radio
                 label="Orange"
                 color="orange"
                 value="orange"
               ></v-radio>
+              </v-flex>
               <v-radio
                 label="Green"
                 color="green"
@@ -30,6 +33,7 @@
                 label="h2"
                 value="h2"
               ></v-radio>
+              
               </v-radio-group>
               <v-radio-group  v-model="weight" class="pa-3" row label="weight">
               <v-radio
@@ -50,48 +54,34 @@
                 label="Camera Mount"
                 value="camera mount"
               ></v-radio>
+            
               </v-radio-group>
+              
                <v-btn @click='getkayaks'>Get Records</v-btn>
-      </v-flex> 
-      </v-card> 
-      
-    </v-container>
+       
 
-    <v-card
-    class="mx-auto"
-    max-width="500px"
-  >
-    
-
-    
-
-    <v-container fluid>
-      <v-row dense>
-        <v-col
-          v-for="kayak in prototype1"
-          :key="kayak.id"
-          :cols=12
-        >
-          <v-card >
-            <v-img
+      <v-flex xs12 md6>
+          <v-responsive>
+          <v-img
               :src="kayak.image"
               class="white--text align-end"
-              
+              max-width="500px"
               height="250px"
             >
               <v-card-title ></v-card-title>
             </v-img>
+          </v-responsive>
             <p class="text-left">CO2 value: <v-card-text class="text--primary" v-text="kayak.co2">
             </v-card-text></p>
             <p class="text-left">Cost: <v-card-text class="text--primary" v-text="kayak.cost">
             </v-card-text></p>
-
-            
-          </v-card>
-        </v-col>
-      </v-row>
+      </v-flex>
+        </v-layout>
+      </v-card> 
+      
     </v-container>
-  </v-card>
+
+    
   </div>
  
 </template>

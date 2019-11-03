@@ -40,11 +40,13 @@
             </v-flex>
         </v-card> -->
 
-      <v-card>
+      <v-card xs12 md6>
        <!-- <v-card-title>
         Kayak Selection
         <v-spacer></v-spacer> -->
-      <v-radio-group class="xs-12 m-6" v-model="colour">
+        
+      <v-flex wrap>
+      <v-radio-group  v-model="colour" class="pa-3" row>
               <v-radio
                 label="red"
                 color="red"
@@ -77,13 +79,14 @@
               ></v-radio>
               </v-radio-group>  
                <v-btn @click='getkayaks'>Get Records</v-btn>
-          
-      </v-card>  
+      </v-flex> 
+      </v-card> 
+      
     </v-container>
 
     <v-card
     class="mx-auto"
-    max-width=500
+    max-width="500px"
   >
     
 
@@ -98,17 +101,17 @@
         >
           <v-card >
             <v-img
-              :src="colour_test_01.image"
+              :src="kayak.image"
               class="white--text align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+              
               height="250px"
             >
               <v-card-title ></v-card-title>
             </v-img>
-            <!-- <p class="text-left">Model No: <v-card-text class="text--primary" v-text="kayak.id">
+            <p class="text-left">Model No: <v-card-text class="text--primary" v-text="kayak.colour">
             </v-card-text></p>
 
-            <p class="text--primary"> Length: <v-card-text class="text--primary" v-text="kayak.length"> ellow
+            <!-- <p class="text--primary"> Length: <v-card-text class="text--primary" v-text="kayak.length"> ellow
             </v-card-text></p>
             <p class="text--primary"> Width:<v-card-text class="text--primary" v-text="kayak.width">
             </v-card-text></p>
@@ -153,11 +156,7 @@ export default {
       colour_test_01: []
     }
   },
-  // methods: {
-  //   changeImage: function() {
-  //     console.log(colour_test_01.colour)
-  //   }
-  // },
+  
  
   // created () {
   //   db.collection('colour_test_01').onSnapshot(res => {
