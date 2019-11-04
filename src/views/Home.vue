@@ -8,7 +8,7 @@
       
     </v-card-text>
     <v-card-actions>
-      <v-btn class="ma-2" color="blue" dark href='/custom'>Login
+      <v-btn class="ma-2" color="blue" dark href='/custom2'>Login
             <v-icon dark right>mdi-lock-open-variant-outline</v-icon>
       </v-btn>
     </v-card-actions>

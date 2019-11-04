@@ -1,7 +1,6 @@
 <template>
   <div class="custom">
     <h1 class="ml-12 pa-3">Kayak Customiser</h1>
-    <p> hello</p>
     <v-container fluid class='my-5'>
       <v-card xs12 md6>
        <!-- <v-card-title>
@@ -94,8 +93,12 @@ export default {
   data() {
     return {
       colour: '',
+      height:'',
+      weight:'',
+      features:'',
       singleSelect: true,
-      prototype1: []
+      prototype1: [],
+      kayak:[]
     }
   },
   

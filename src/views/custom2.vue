@@ -3,12 +3,12 @@
     <h1 class="ml-12 pa-3">Kayak Customiser</h1>
     <v-container class='my-5'>
       <v-card xs12 md6>
-       <!-- <v-card-title>
-        Kayak Selection
-        <v-spacer></v-spacer> -->
+       <v-card-title>
+        Customisation Options: </v-card-title>
+        <v-spacer></v-spacer>
         
       <v-flex wrap>
-      <v-radio-group  v-model="colour" class="pa-3" row label="colour">
+      <v-radio-group  v-model="colour" class="pa-3" row label="Colour:  ">
               <v-radio
                 label="Orange"
                 color="orange"
@@ -21,29 +21,29 @@
               ></v-radio>
               </v-radio-group> 
                <v-spacer></v-spacer> 
-               <v-radio-group  v-model="height" class="pa-3" row label="height">
+               <v-radio-group  v-model="height" class="pa-3" row label="Your height: ">
               <v-radio
-                label="h1"
+                label="< 170cm"
                 value="h1"
               ></v-radio>
               <v-radio
-                label="h2"
+                label="> 171cm"
                 value="h2"
               ></v-radio>
               </v-radio-group>
-              <v-radio-group  v-model="weight" class="pa-3" row label="weight">
+              <v-radio-group  v-model="weight" class="pa-3" row label="Your weight:  ">
               <v-radio
-                label="w1"
+                label="40kg - 70kg"
                 value="w1"
               ></v-radio>
               <v-radio
-                label="w2"
+                label="71kg - 100kg"
                 value="w2"
               ></v-radio>
               </v-radio-group>
-              <v-radio-group  v-model="features" class="pa-3" row label="features">
+              <v-radio-group  v-model="features" class="pa-3" row label="Features:  ">
               <v-radio
-                label="none"
+                label="None"
                 value="none"
               ></v-radio>
               <v-radio
@@ -51,32 +51,19 @@
                 value="camera mount"
               ></v-radio>
               </v-radio-group>
-               <v-btn @click='getkayaks'>Get Records</v-btn>
+               <v-btn @click='getkayaks'>View Kayak</v-btn>
       </v-flex> 
       </v-card> 
       
-    </v-container>
-
-    <v-card
-    class="mx-auto"
-    max-width="500px"
-  >
     
 
-    
-
-    <v-container fluid>
-      <v-row dense>
-        <v-col
-          v-for="kayak in prototype1"
-          :key="kayak.id"
-          :cols=12
-        >
-          <v-card >
+          <v-card xs12 md6 class="mx-auto"
+     v-for="kayak in prototype1"
+          :key="kayak.id">
             <v-img
               :src="kayak.image"
               class="white--text align-end"
-              
+              max-width="500px"
               height="250px"
             >
               <v-card-title ></v-card-title>
@@ -88,10 +75,9 @@
 
             
           </v-card>
-        </v-col>
-      </v-row>
+        
     </v-container>
-  </v-card>
+  
   </div>
  
 </template>
@@ -104,6 +90,9 @@ export default {
   data() {
     return {
       colour: '',
+      height:'',
+      weight:'',
+      features:'',
       singleSelect: true,
       prototype1: []
     }
