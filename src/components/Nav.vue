@@ -1,8 +1,8 @@
 <template>
     <nav>
-        <v-app-bar app class="cyan lighten-5">
+        <v-app-bar app class="white" >
             <v-toolbar-title class="headline">
-        <span class="font-weight-light">kustAM.kayaks</span>
+        <span class="teal--text">kustAM.kayaks</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
             
