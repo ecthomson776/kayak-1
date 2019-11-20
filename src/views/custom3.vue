@@ -153,11 +153,6 @@
                   label="Hatches"
                 >
             </v-select>
-            <v-select
-                  v-model="Bulkheads"
-                  :items="BulkheadOptions"
-                  label="Bulkheads"
-            ></v-select>
           </v-card-text>
         </v-card>
 
@@ -367,21 +362,7 @@ export default {
             value: 2,
           },
         ],
-        Bulkheads: 0,
-        BulkheadOptions: [
-          {
-            text: "option 1",
-            value: 0,
-          },
-          {
-            text: "option 2",
-            value: 1,
-          },
-          {
-            text: "option 3",
-            value: 2,
-          },
-        ],
+        
         ThighBraces: 0,
         ThighBraceOptions: [
           {
@@ -425,7 +406,7 @@ methods:{
 computed: {
   Case: function (){
     var variant = ""
-    if (this.stature, '==', HumanHeight & this.weight,'==', HumanWeight & this.skeg,'==',Skeg & this.rudder,'==', Rudder & this.hatch,'==',Hatches & this.bulkhead,'==',Bulkheads & this.thighBraces,'==',ThighBraces)
+    if (this.stature, '==',HumanHeight & this.weight,'==', HumanWeight & this.skeg,'==',Skeg & this.rudder,'==', Rudder & this.hatch,'==',Hatches & this.thighBraces,'==',ThighBraces)
     return variant
   }
    
