@@ -1,9 +1,9 @@
 <template>
   <div class="advanced">
     <v-container>
-      <v-stepper v-model="e1">
-    <v-stepper-header>
-      <v-stepper-step :complete="e1 > 1" step="1">Base Kayak</v-stepper-step>
+      <v-stepper v-model="e1" >
+    <v-stepper-header colour='teal'>
+      <v-stepper-step :complete="e1 > 1" step="1" >Base Kayak</v-stepper-step>
 
       <v-divider></v-divider>
 
@@ -228,12 +228,7 @@
             </v-col>
             <v-col :md=4 :xs=12>
               <small>kayak</small>
-              <v-img
-                    :src="getImgUrl('Kayak_' + this.Case.number + '.jpg')"
-                    width="300"
-                    min-width="100"
-                    contain
-                  >
+              <model-stl :src="getSTL('kayak_' + this.Case + '.stl')"></model-stl>
             </v-col>
             <v-col :md=4 :xs=12>
               <small>co2 etc</small>
@@ -268,8 +263,7 @@ export default {
     return {
       e1: 1,
       singleSelect: true,
-      kayaks: [],
-      extras: [],
+      prototype2: [],
       headers: [
           { text: 'Picture',value: 'picture'},
           {
@@ -416,35 +410,24 @@ export default {
         ],
     }
   }, 
-   methods: {getkayaks () {
-     this.kayaks=[]
-     this.e1 = this.e1+1
-     db.collection('kayaks').where('colour','==',this.colour).where('length','==',this.sliderl).where('width','==',this.sliderw).get()
-    .then(snapshot => {
-      snapshot.forEach(doc =>{
-        let kayak = doc.data()
-        kayak.id = doc.id
-        this.kayaks.push(kayak)
-      })
-    })
-  }, 
+methods:{
+  getSTL(pic) {
+        var stlUrl = null
+        try {
+          stlUrl = require('../assets/STL/'+pic)
+        } catch (error) {
+          stlUrl = 'missing'
+        }
+        return stlUrl
+      }
+},
 
 computed: {
   Case: function (){
     var variant = ""
-    if (this.stature, '==', HumanHeight & this.weight,'==', HumanWeight & this.skeg,'==',Skeg & this.Rudder,'==', Rudder & this.hatch,'==',Hatches & this.bulkhead,'==',Bulkheads & this.thigh-braces,'==',ThighBraces)
+    if (this.stature, '==', HumanHeight & this.weight,'==', HumanWeight & this.skeg,'==',Skeg & this.rudder,'==', Rudder & this.hatch,'==',Hatches & this.bulkhead,'==',Bulkheads & this.thighBraces,'==',ThighBraces)
     return variant
-  },
-  getImgUrl(pic) {
-        var imageUrl = null
-        try {
-          imageUrl = require('../assets/Images/'+pic)
-        } catch (error) {
-          imageUrl = 'missing'
-        }
-        return imageUrl
-
-  },
-  
+  }
+   
 }}
 </script>
