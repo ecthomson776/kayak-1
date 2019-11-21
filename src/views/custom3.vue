@@ -36,7 +36,7 @@
 
     <v-stepper-items>
       <v-stepper-content step="1">
-        <v-form v-model="valid">
+        <v-form >
           <v-container>
             <v-card>
     <v-card-title>
@@ -211,7 +211,7 @@
       </v-stepper-content>
 
       <v-stepper-content step="8">
-        <v-card class="mx-auto my-3">
+        <v-card class="mx-auto my-3" v-for="kayak in prototype2" :key="kayak.id">
           <v-card-title>
           Order Summary
         </v-card-title>
@@ -223,9 +223,10 @@
             </v-col>
             <v-col :md=4 :xs=12>
               <small>kayak</small>
-              <model-stl :src="getSTL('kayak_' + this.Case + '.stl')"></model-stl>
+              <model-stl :src="kayak.cad"></model-stl>
             </v-col>
             <v-col :md=4 :xs=12>
+              <p v-text="kayak.stature"></p>
               <small>co2 etc</small>
               <!-- co2 cost etc -->
             </v-col>
@@ -238,7 +239,7 @@
           >
             Back
           </v-btn>
-          <v-btn  class= "ma-2 teal--text"  @click='SubmitOrder'>Submit Order</v-btn>
+          <v-btn  class= "ma-2 teal--text">Submit Order</v-btn>
       </v-stepper-content>
 
 
@@ -256,6 +257,8 @@
 export default {
   data() {
     return {
+      Type:'',
+      variant:1,
       e1: 1,
       singleSelect: true,
       prototype2: [],
@@ -317,61 +320,69 @@ export default {
             value: 2,
           },
         ],
-        Skeg: 0,
+        Skeg: 'False',
         SkegOptions: [
           {
-            text: "option 1",
-            value: 0,
+            text: "No",
+            value: 'False',
           },
           {
-            text: "option 2",
-            value: 1,
-          },
-          {
-            text: "option 3",
-            value: 2,
+            text: "Yes",
+            value: 'True',
           },
         ],
-        Rudder: 0,
+        Rudder: 'False',
         RudderOptions: [
           {
-            text: "option 1",
-            value: 0,
+            text: "No",
+            value: 'False',
           },
           {
-            text: "option 2",
-            value: 1,
-          },
-          {
-            text: "option 3",
-            value: 2,
+            text: "Yes",
+            value: 'True',
           },
         ],
-        Hatches: 0,
+        Hatches: 1,
         HatchOptions: [
           {
-            text: "option 1",
-            value: 0,
-          },
-          {
-            text: "option 2",
+            text: "Day Hatch on left side",
             value: 1,
           },
           {
-            text: "option 3",
+            text: "Day Hatch on right side",
             value: 2,
+          },
+          {
+            text: "Day Hatch on left side + Rear storage",
+            value: 3,
+          },
+          {
+            text: "Day Hatch on right side + Rear storage",
+            value: 4,
+          },
+          {
+            text: "Day Hatch on left side + Rear storage + Front storage",
+            value: 5,
+          },
+          {
+            text: "Day Hatch on right side + Rear storage + Front storage",
+            value: 6,
+          },
+          {
+            text: "No Storage",
+            value: 7,
           },
         ],
         
-        ThighBraces: 0,
+        ThighBraces: 'False',
         ThighBraceOptions: [
           {
             text: "no",
-            value: 0,
+            value: 'False',
           },
           {
             text: "yes",
-            value: 1,
+            value: 'True',
           },
         ],
         Location: 0,
@@ -390,25 +401,19 @@ export default {
           },
         ],
     }
-  }, 
+  },
 methods:{
-  getSTL(pic) {
-        var stlUrl = null
-        try {
-          stlUrl = require('../assets/STL/'+pic)
-        } catch (error) {
-          stlUrl = 'missing'
-        }
-        return stlUrl
-      }
-},
-
-computed: {
-  Case: function (){
-    var variant = ""
-    if (this.stature, '==',HumanHeight & this.weight,'==', HumanWeight & this.skeg,'==',Skeg & this.rudder,'==', Rudder & this.hatch,'==',Hatches & this.thighBraces,'==',ThighBraces)
-    return variant
-  }
-   
-}}
+  getkayaks () {
+     this.prototype2=[]
+     this.e1 = this.e1+1
+     db.collection('prototype2').where('stature','==',this.HumanHeight).where('weight','==',this.HumanWeight).where('skeg','==',this.Skeg).where('rudder','==',this.Rudder).where('hatch','==',this.Hatches).where('thighBraces','==',this.ThighBraces).get()
+    .then(snapshot => {
+      snapshot.forEach(doc =>{
+        let kayak = doc.data()
+        kayak.id = doc.id
+        this.prototype2.push(kayak)
+      })
+    })
+  }}}
+  
 </script>
