@@ -207,11 +207,11 @@
           >
             Back
           </v-btn>
-          <v-btn  class= "ma-2 teal--text"  @click="e1=8">Next Step</v-btn>
+          <v-btn  class= "ma-2 teal--text"  @click="getkayaks()">>Next Step</v-btn>
       </v-stepper-content>
 
-      <v-stepper-content step="8">
-        <v-card class="mx-auto my-3" v-for="kayak in prototype2" :key="kayak.id">
+      <v-stepper-content step="8" >
+        <v-card class="mx-auto my-3" >
           <v-card-title>
           Order Summary
         </v-card-title>
@@ -221,12 +221,12 @@
               <!-- summary of user choices-->
               
             </v-col>
-            <v-col :md=4 :xs=12>
+            <v-col :md=4 :xs=12 >
               <small>kayak</small>
-              <model-stl :src="kayak.cad"></model-stl>
+              <model-stl v-for="kayak in prototype2" :key="kayak.id" :src="kayak.cad"></model-stl>
             </v-col>
             <v-col :md=4 :xs=12>
-              <p v-text="kayak.stature"></p>
+              <p v-for="kayak in prototype2" :key="kayak.id" v-text="kayak.stature"></p>
               <small>co2 etc</small>
               <!-- co2 cost etc -->
             </v-col>
@@ -254,9 +254,14 @@
 </template>
 <script>
   import db from '@/fb'
+  import { ModelStl } from 'vue-3d-model'
 export default {
+  components: {
+            ModelStl
+        },
   data() {
     return {
+      cad:'',
       Type:'',
       variant:1,
       e1: 1,
