@@ -1,7 +1,7 @@
 <template>
   <div class="advanced">
     <v-container>
-      <v-stepper v-model="e1" >
+      <v-stepper v-model="e1" alt-labels>
     <v-stepper-header colour='teal'>
       <v-stepper-step :complete="e1 > 1" step="1" >Base Kayak</v-stepper-step>
 
@@ -31,12 +31,17 @@
 
       <v-divider></v-divider>
 
-      <v-stepper-step step="8">Order</v-stepper-step>
+      <v-stepper-step :complete="e1 > 8" step="8">Order</v-stepper-step>
+
+      <v-divider></v-divider>
+
+      <v-stepper-step step="9"> Your Details</v-stepper-step>
+
     </v-stepper-header>
 
     <v-stepper-items>
       <v-stepper-content step="1">
-        <v-form >
+        <v-form v-model="valid">
           <v-container>
             <v-card>
     <v-card-title>
@@ -234,12 +239,70 @@
           </v-card-text>
         </v-card>
 
+        <v-btn class= "ma-2 teal--text">
+            Back
+          </v-btn>
+          <v-btn  class= "ma-2 teal--text" @click="e1 = 9">Checkout</v-btn>
+      </v-stepper-content>
+
+
+    <v-stepper-content step="9" >
+        <v-card class="mx-auto my-3" >
+          <v-card-title>
+          Personal Details
+        </v-card-title>
+          <v-card-text class="pt-0">
+            <v-form v-model="valid">
+            <v-row>
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-text-field
+            v-model="firstname"
+            :rules="nameRules"
+            :counter="10"
+            label="First name"
+            required
+          ></v-text-field>
+        </v-col>
+
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-text-field
+            v-model="lastname"
+            :rules="nameRules"
+            :counter="10"
+            label="Last name"
+            required
+          ></v-text-field>
+        </v-col>
+
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="E-mail"
+            required
+          ></v-text-field>
+        </v-col>
+      </v-row>
+            </v-form>
+          </v-card-text>
+            
+        </v-card>
+
         <v-btn class= "ma-2 teal--text"
-            @click="e1 = 7"
+            @click="e1 = 8"
           >
             Back
           </v-btn>
-          <v-btn  class= "ma-2 teal--text">Submit Order</v-btn>
+          <v-btn  class= "ma-2 teal--text" @click="submitOrder()">Submit Order</v-btn>
       </v-stepper-content>
 
 
@@ -261,12 +324,23 @@ export default {
         },
   data() {
     return {
+      valid: false,
+      firstname: '',
+      lastname: '',
       cad:'',
       Type:'',
       variant:1,
       e1: 1,
       singleSelect: true,
       prototype2: [],
+      nameRules: [
+        v => !!v || 'Name is required',
+      ],
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
       headers: [
           { text: 'Picture',value: 'picture'},
           {
@@ -347,62 +421,62 @@ export default {
             value: 'True',
           },
         ],
-        Hatches: 1,
+        Hatches: "Day Hatch on left side",
         HatchOptions: [
           {
             text: "Day Hatch on left side",
-            value: 1,
+            value: "Day Hatch on left side",
           },
           {
             text: "Day Hatch on right side",
-            value: 2,
+            value: "Day Hatch on right side",
           },
           {
             text: "Day Hatch on left side + Rear storage",
-            value: 3,
+            value: "Day Hatch on left side + Rear storage",
           },
           {
             text: "Day Hatch on right side + Rear storage",
-            value: 4,
+            value: "Day Hatch on right side + Rear storage",
           },
           {
             text: "Day Hatch on left side + Rear storage + Front storage",
-            value: 5,
+            value: "Day Hatch on left side + Rear storage + Front storage",
           },
           {
             text: "Day Hatch on right side + Rear storage + Front storage",
-            value: 6,
+            value: "Day Hatch on right side + Rear storage + Front storage",
           },
           {
             text: "No Storage",
-            value: 7,
+            value: "No Storage",
           },
         ],
         
-        ThighBraces: 'False',
+        ThighBraces: 'no',
         ThighBraceOptions: [
           {
             text: "no",
-            value: 'False',
+            value: 'no',
           },
           {
             text: "yes",
-            value: 'True',
+            value: 'yes',
           },
         ],
-        Location: 0,
+        Location: "Sweden",
         LocationOptions: [
           {
             text: "Sweden",
-            value: 0,
+            value: "Sweden",
           },
           {
             text: "Europe",
-            value: 1,
+            value: "Europe",
           },
           {
             text: "Rest of World",
-            value: 2,
+            value: "Rest of World",
           },
         ],
     }
@@ -419,6 +493,27 @@ methods:{
         this.prototype2.push(kayak)
       })
     })
-  }}}
+  }},
+  submitOrder() {
+      if(this.$refs.form.validate()) {
+        const Order = { 
+          firstname: this.firstname,
+          lastname: this.lastname,
+          email: this.email,
+          material: this.Materials,
+          stature: this.HumanHeight,
+          skeg: this.Skeg,
+          rudder: this.Rudder,
+          hatch: this.Hatches,
+          thighBraces: this.thighBraces,
+          modelNumber: this.variant,
+          deliveryLocation: this.Location
+        }
+        db.collection('Orders').add(Order).then(() => {
+          console.log('added to db')
+        })
+      }
+    }
+  }
   
 </script>
