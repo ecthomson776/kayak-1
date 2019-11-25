@@ -493,9 +493,9 @@ methods:{
         this.prototype2.push(kayak)
       })
     })
-  }},
+  },
   submitOrder() {
-      if(this.$refs.form.validate()) {
+     
         const Order = { 
           firstname: this.firstname,
           lastname: this.lastname,
@@ -505,15 +505,17 @@ methods:{
           skeg: this.Skeg,
           rudder: this.Rudder,
           hatch: this.Hatches,
-          thighBraces: this.thighBraces,
+          thighBraces: this.ThighBraces,
           modelNumber: this.variant,
           deliveryLocation: this.Location
+          
         }
         db.collection('Orders').add(Order).then(() => {
-          console.log('added to db')
+          console.log('added to db'),
+          this.$router.push('Thanks')
         })
       }
-    }
-  }
+    
+  }}
   
 </script>
