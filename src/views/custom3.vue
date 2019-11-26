@@ -221,20 +221,22 @@
           Order Summary
         </v-card-title>
           <v-card-text class="pt-0">
-            <v-col :md=4 :xs=12>
+            <v-row>
+            <v-col :md=3 :xs=12>
               <small> Your Choices</small>
               <!-- summary of user choices-->
               
             </v-col>
-            <v-col :md=4 :xs=12 >
+            <v-col :md=6 :xs=12 >
               <small>kayak</small>
               <model-stl v-for="kayak in prototype2" :key="kayak.id" :src="kayak.cad"></model-stl>
             </v-col>
-            <v-col :md=4 :xs=12>
+            <v-col :md=3 :xs=12>
               <p v-for="kayak in prototype2" :key="kayak.id" v-text="kayak.stature"></p>
               <small>co2 etc</small>
               <!-- co2 cost etc -->
             </v-col>
+            </v-row>
            
           </v-card-text>
         </v-card>
@@ -497,6 +499,7 @@ methods:{
   submitOrder() {
      
         const Order = { 
+          modelNumber: this.variant,
           firstname: this.firstname,
           lastname: this.lastname,
           email: this.email,
@@ -506,12 +509,11 @@ methods:{
           rudder: this.Rudder,
           hatch: this.Hatches,
           thighBraces: this.ThighBraces,
-          modelNumber: this.variant,
           deliveryLocation: this.Location
           
         }
         db.collection('Orders').add(Order).then(() => {
-          console.log('added to db'),
+          
           this.$router.push('Thanks')
         })
       }
