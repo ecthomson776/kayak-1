@@ -107,6 +107,11 @@
                   :items="HumanWeightOptions"
                   label="Your Weight"
             ></v-select>
+            <v-select
+                  v-model="waist"
+                  :items="waistOptions"
+                  label="Your Waist Size"
+            ></v-select>
           </v-card-text>
         </v-card>
 
@@ -225,11 +230,68 @@
             <v-col :md=3 :xs=12>
               <small> Your Choices</small>
               <!-- summary of user choices-->
+              <v-simple-table dense class="mb-3" v-for="kayak in prototype2" :key="kayak.id">
+                  <template v-slot:default>
+                    <tbody>
+                      <tr>
+                        <td class="text-left">Material</td>
+                        <td class="text-left">{{this.Materials}} h</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Your Height</td>
+                        <td class="text-left">{{kayak.stature}} h</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Your Weight</td>
+                        <td class="text-left">{{kayak.weight}} h</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Your Waist Width</td>
+                        <td class="text-left">{{kayak.waist}} h</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Skeg</td>
+                        <td class="text-left">{{kayak.skeg}} h</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Rudder</td>
+                        <td class="text-left">{{kayak.rudder}} h</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Hatches</td>
+                        <td class="text-left">{{kayak.hatch}} h</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Thigh Braces</td>
+                        <td class="text-left">{{kayak.thighBraces}} h</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Delivery Location</td>
+                        <td class="text-left">{{this.Location}} h</td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
               
             </v-col>
             <v-col :md=6 :xs=12 >
               <small>kayak</small>
-              <model-stl v-for="kayak in prototype2" :key="kayak.id" :src="kayak.cad"></model-stl>
+              <model-stl  v-for="kayak in prototype2" :key="kayak.id" :src="kayak.cad"></model-stl>
+              <v-layout row wrap> 
+              <v-flex xs12 md4 class="px-3">
+              <div class="caption grey--text">Length</div>
+              <div>{{ kayak.length }}</div>
+            </v-flex>
+            <v-flex xs12 md4 class="px-3">
+              <div class="caption grey--text">Width</div>
+              <div>{{ kayak.width }}</div>
+            </v-flex>
+            <v-flex xs12 md4>
+              <div class="caption grey--text">Weight</div>
+              <!-- <div>{{ calculation }}</div>  -->
+            </v-flex>
+            
+          </v-layout>
             </v-col>
             <v-col :md=3 :xs=12>
               <p v-for="kayak in prototype2" :key="kayak.id" v-text="kayak.stature"></p>
@@ -241,7 +303,7 @@
           </v-card-text>
         </v-card>
 
-        <v-btn class= "ma-2 teal--text">
+        <v-btn class= "ma-2 teal--text" @click="e1 = 7">
             Back
           </v-btn>
           <v-btn  class= "ma-2 teal--text" @click="e1 = 9">Checkout</v-btn>
@@ -263,7 +325,6 @@
           <v-text-field
             v-model="firstname"
             :rules="nameRules"
-            :counter="10"
             label="First name"
             required
           ></v-text-field>
@@ -276,7 +337,6 @@
           <v-text-field
             v-model="lastname"
             :rules="nameRules"
-            :counter="10"
             label="Last name"
             required
           ></v-text-field>
@@ -320,18 +380,21 @@
 <script>
   import db from '@/fb'
   import { ModelStl } from 'vue-3d-model'
+  import axios from 'axios'
 export default {
   components: {
             ModelStl
         },
   data() {
     return {
+      length: '',
+      width:'',
       valid: false,
       firstname: '',
       lastname: '',
       cad:'',
       Type:'',
-      variant:1,
+      variant:'',
       e1: 1,
       singleSelect: true,
       prototype2: [],
@@ -357,70 +420,107 @@ export default {
           { text: 'Width', value: 'width' },
           
         ],
-      Materials: 0,
+      Materials: "Recycled ABS",
         MaterialOptions: [
           {
             text: "Recycled ABS",
-            value: 0,
+            value:"Recycled ABS",
+
           },
           {
             text: "UPM",
-            value: 1,
+            value: "UPM",
           },
         ],
-      HumanHeight: 0,
+      HumanHeight: "<1550",
         HumanHeightOptions: [
           {
-            text: "70cm - 80cm",
-            value: 0,
-            icon: "mdi-seat-legroom-reduced",
+            text: "< 155cm",
+            value: "<1550",
           },
           {
-            text: "80cm - 90cm",
-            value: 1,
-            icon: "mdi-seat-legroom-normal",
+            text: "155cm - 165cm",
+            value: "1550 - 1650",
           },
           {
-            text: "90cm - 100cm",
-            value: 2,
-            icon: "mdi-seat-legroom-extra",
+            text: "166cm - 175cm",
+            value: "1651 - 1750",
+          },
+          {
+            text: "176cm - 185cm",
+            value: "1751 - 1850",
+          },
+          {
+            text: "> 185cm ",
+            value: ">1850",
           },
         ],
-        HumanWeight: 0,
+        HumanWeight: "<55",
         HumanWeightOptions: [
           {
-            text: "50kg - 70kg",
-            value: 0,
+            text: "< 55kg",
+            value: "<55",
           },
           {
-            text: "70kg - 90kg",
-            value: 1,
+            text: "55kg - 70kg",
+            value: "55-70",
           },
           {
-            text: "90kg - 110kg",
-            value: 2,
+            text: "71kg - 80kg",
+            value: "71-80",
           },
+          {
+            text: "81kg - 90kg",
+            value: "81-90",
+          },
+          {
+            text: "> 90kg",
+            value: ">90",
+          }
         ],
-        Skeg: 'False',
+        waist: "<700",
+        waistOptions: [
+          {
+            text: "< 70cm",
+            value: "<700",
+          },
+          {
+            text: "70cm - 80cm",
+            value: "700-800",
+          },
+          {
+            text: "81cm - 95cm",
+            value: "801-950",
+          },
+          {
+            text: "96cm - 110cm",
+            value: "951-1100",
+          },
+          {
+            text: "> 110cm",
+            value: ">1100",
+          }
+        ],
+        Skeg: 'No',
         SkegOptions: [
           {
             text: "No",
-            value: 'False',
+            value: 'No',
           },
           {
             text: "Yes",
-            value: 'True',
+            value: 'Yes',
           },
         ],
-        Rudder: 'False',
+        Rudder: 'No',
         RudderOptions: [
           {
             text: "No",
-            value: 'False',
+            value: 'No',
           },
           {
             text: "Yes",
-            value: 'True',
+            value: 'Yes',
           },
         ],
         Hatches: "Day Hatch on left side",
@@ -455,15 +555,15 @@ export default {
           },
         ],
         
-        ThighBraces: 'no',
+        ThighBraces: 'No',
         ThighBraceOptions: [
           {
-            text: "no",
-            value: 'no',
+            text: "No",
+            value: 'No',
           },
           {
-            text: "yes",
-            value: 'yes',
+            text: "Yes",
+            value: 'Yes',
           },
         ],
         Location: "Sweden",
