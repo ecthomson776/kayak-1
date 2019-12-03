@@ -5,9 +5,12 @@ import Custom from './views/custom.vue'
 import Custom2 from './views/custom2.vue'
 import Custom3 from './views/custom3.vue'
 import Thanks from './views/Thanks.vue'
+import Signup from './components/auth/Signup'
+import Login from './components/auth/Login'
+import firebase from 'firebase'
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -31,7 +34,9 @@ export default new Router({
     {
       path: '/custom3',
       name: 'custom3',
-      component: Custom3
+      component: Custom3,
+      meta: {
+        requiresAuth: true }
       
     },
     {
@@ -39,6 +44,36 @@ export default new Router({
       name: 'Thanks',
       component: Thanks
       
+    },
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: Signup
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  //check to see if route requires auth
+  if(to.matched.some(rec => rec.meta.requiresAuth)){
+    // check auth state of user
+    let user = firebase.auth().currentUser
+    if(user){
+      //user signed in, proceed to route
+      next()
+    } else {
+      // no user signed in, redirect to login
+      next({ name: 'Login'})
+    }
+  } else {
+    next()
+  }
+})
+
+export default router
+

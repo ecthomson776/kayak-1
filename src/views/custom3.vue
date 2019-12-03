@@ -23,19 +23,15 @@
 
       <v-divider></v-divider>
 
-      <v-stepper-step :complete="e1 > 6" step="6">Thigh Braces</v-stepper-step>
+      <v-stepper-step :complete="e1 > 6" step="6">Delivery</v-stepper-step>
 
       <v-divider></v-divider>
 
-      <v-stepper-step :complete="e1 > 7" step="7">Delivery</v-stepper-step>
+      <v-stepper-step :complete="e1 > 7" step="7">Order</v-stepper-step>
 
       <v-divider></v-divider>
 
-      <v-stepper-step :complete="e1 > 8" step="8">Order</v-stepper-step>
-
-      <v-divider></v-divider>
-
-      <v-stepper-step step="9"> Your Details</v-stepper-step>
+      <v-stepper-step step="8"> Your Details</v-stepper-step>
 
     </v-stepper-header>
 
@@ -177,29 +173,6 @@
       <v-stepper-content step="6">
         <v-card class="mx-auto my-3">
           <v-card-title>
-          Thigh Braces
-        </v-card-title>
-          <v-card-text>
-           <v-select
-                  v-model="ThighBraces"
-                  :items="ThighBraceOptions"
-                  label="Thigh Braces"
-                >
-            </v-select>
-          </v-card-text>
-        </v-card>
-
-        <v-btn class= "ma-2 teal--text"
-            @click="e1 = 5"
-          >
-            Back
-          </v-btn>
-          <v-btn  class= "ma-2 teal--text"  @click="e1=7">Next Step</v-btn>
-      </v-stepper-content>
-
-      <v-stepper-content step="7">
-        <v-card class="mx-auto my-3">
-          <v-card-title>
           Delivery Location
         </v-card-title>
           <v-card-text>
@@ -213,14 +186,14 @@
         </v-card>
 
         <v-btn class= "ma-2 teal--text"
-            @click="e1 = 6"
+            @click="e1 = 5"
           >
             Back
           </v-btn>
           <v-btn  class= "ma-2 teal--text"  @click="getkayaks()">>Next Step</v-btn>
       </v-stepper-content>
 
-      <v-stepper-content step="8" >
+      <v-stepper-content step="7" >
         <v-card class="mx-auto my-3" >
           <v-card-title>
           Order Summary
@@ -280,11 +253,11 @@
               <v-layout row wrap> 
               <v-flex xs12 md4 class="px-3">
               <div class="caption grey--text">Length</div>
-              <div>{{ kayak.length }}</div>
+              <div v-for="kayak in prototype2" :key="kayak.id">{{ kayak.length }}</div>
             </v-flex>
             <v-flex xs12 md4 class="px-3">
               <div class="caption grey--text">Width</div>
-              <div>{{ kayak.width }}</div>
+              <div v-for="kayak in prototype2" :key="kayak.id">{{ kayak.width }}</div>
             </v-flex>
             <v-flex xs12 md4>
               <div class="caption grey--text">Weight</div>
@@ -303,14 +276,14 @@
           </v-card-text>
         </v-card>
 
-        <v-btn class= "ma-2 teal--text" @click="e1 = 7">
+        <v-btn class= "ma-2 teal--text" @click="e1 = 6">
             Back
           </v-btn>
-          <v-btn  class= "ma-2 teal--text" @click="e1 = 9">Checkout</v-btn>
+          <v-btn  class= "ma-2 teal--text" @click="e1 = 8">Checkout</v-btn>
       </v-stepper-content>
 
 
-    <v-stepper-content step="9" >
+    <v-stepper-content step="8" >
         <v-card class="mx-auto my-3" >
           <v-card-title>
           Personal Details
@@ -360,7 +333,7 @@
         </v-card>
 
         <v-btn class= "ma-2 teal--text"
-            @click="e1 = 8"
+            @click="e1 = 7"
           >
             Back
           </v-btn>
@@ -380,7 +353,7 @@
 <script>
   import db from '@/fb'
   import { ModelStl } from 'vue-3d-model'
-  import axios from 'axios'
+
 export default {
   components: {
             ModelStl
