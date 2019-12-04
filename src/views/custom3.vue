@@ -27,11 +27,7 @@
 
       <v-divider></v-divider>
 
-      <v-stepper-step :complete="e1 > 7" step="7">Order</v-stepper-step>
-
-      <v-divider></v-divider>
-
-      <v-stepper-step step="8"> Your Details</v-stepper-step>
+      <v-stepper-step :complete="e1 > 7" step="7">Order Summary</v-stepper-step>
 
     </v-stepper-header>
 
@@ -279,68 +275,8 @@
         <v-btn class= "ma-2 teal--text" @click="e1 = 6">
             Back
           </v-btn>
-          <v-btn  class= "ma-2 teal--text" @click="e1 = 8">Checkout</v-btn>
-      </v-stepper-content>
-
-
-    <v-stepper-content step="8" >
-        <v-card class="mx-auto my-3" >
-          <v-card-title>
-          Personal Details
-        </v-card-title>
-          <v-card-text class="pt-0">
-            <v-form v-model="valid">
-            <v-row>
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="firstname"
-            :rules="nameRules"
-            label="First name"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="lastname"
-            :rules="nameRules"
-            label="Last name"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="email"
-            :rules="emailRules"
-            label="E-mail"
-            required
-          ></v-text-field>
-        </v-col>
-      </v-row>
-            </v-form>
-          </v-card-text>
-            
-        </v-card>
-
-        <v-btn class= "ma-2 teal--text"
-            @click="e1 = 7"
-          >
-            Back
-          </v-btn>
           <v-btn  class= "ma-2 teal--text" @click="submitOrder()">Submit Order</v-btn>
       </v-stepper-content>
-
-
     </v-stepper-items>
   </v-stepper>
     </v-container>
@@ -370,6 +306,7 @@ export default {
       variant:'',
       e1: 1,
       singleSelect: true,
+      users: [],
       prototype2: [],
       nameRules: [
         v => !!v || 'Name is required',
@@ -528,17 +465,6 @@ export default {
           },
         ],
         
-        ThighBraces: 'No',
-        ThighBraceOptions: [
-          {
-            text: "No",
-            value: 'No',
-          },
-          {
-            text: "Yes",
-            value: 'Yes',
-          },
-        ],
         Location: "Sweden",
         LocationOptions: [
           {
@@ -560,7 +486,7 @@ methods:{
   getkayaks () {
      this.prototype2=[]
      this.e1 = this.e1+1
-     db.collection('prototype2').where('stature','==',this.HumanHeight).where('weight','==',this.HumanWeight).where('skeg','==',this.Skeg).where('rudder','==',this.Rudder).where('hatch','==',this.Hatches).where('thighBraces','==',this.ThighBraces).get()
+     db.collection('prototype2').where('stature','==',this.HumanHeight).where('weight','==',this.HumanWeight).where('skeg','==',this.Skeg).where('rudder','==',this.Rudder).where('hatch','==',this.Hatches).get()
     .then(snapshot => {
       snapshot.forEach(doc =>{
         let kayak = doc.data()
@@ -570,18 +496,13 @@ methods:{
     })
   },
   submitOrder() {
-     
+     this.prototype2=[]
+     this.users=[]
         const Order = { 
+          customer: this.uid,
           modelNumber: this.variant,
-          firstname: this.firstname,
-          lastname: this.lastname,
-          email: this.email,
+          STL: this.cad,
           material: this.Materials,
-          stature: this.HumanHeight,
-          skeg: this.Skeg,
-          rudder: this.Rudder,
-          hatch: this.Hatches,
-          thighBraces: this.ThighBraces,
           deliveryLocation: this.Location
           
         }

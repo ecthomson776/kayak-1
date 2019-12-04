@@ -5,6 +5,12 @@
         <span class="teal--text">kustAM.kayaks</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
+            
+            <v-btn v-if="admin" text to="order">
+                <span class="mr-2">Admin</span>
+                <v-icon right>mdi-basket-outline</v-icon>
+            </v-btn>
+            <v-spacer></v-spacer>
             <v-btn v-if="!user" text to="signup">
                 <span class="mr-2">Sign Up</span>
                 <v-icon right>mdi-account-plus</v-icon>
@@ -27,10 +33,12 @@
 
 <script>
 import firebase from 'firebase'
+import db from '@/fb'
 export default {
-    data(){
+   data(){
        return{
-       user: null
+       user: null,
+       admin: null
        }
    },
    methods: {
@@ -44,11 +52,21 @@ export default {
         firebase.auth().onAuthStateChanged((user) => {
             if(user){
                 this.user = user
+                db.collection('users').where('user_id','==',user.uid).where('admin','==',true).get()
+                .then(snapshot => {
+                snapshot.forEach(doc =>{
+                    let admin = doc.data()
+                    // eslint-disable-next-line
+                this.admin=admin
+                    
+                    
+                 
+      })
+    })
             } else {
                 this.user = null
             }
         })
     }
-    
 }
 </script>
