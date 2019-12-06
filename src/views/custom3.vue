@@ -199,49 +199,16 @@
             <v-col :md=3 :xs=12>
               <small> Your Choices</small>
               <!-- summary of user choices-->
-              <v-simple-table dense class="mb-3" v-for="kayak in prototype2" :key="kayak.id">
-                  <template v-slot:default>
-                    <tbody>
-                      <tr>
-                        <td class="text-left">Material</td>
-                        <td class="text-left">{{this.Materials}} h</td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Your Height</td>
-                        <td class="text-left">{{kayak.stature}} h</td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Your Weight</td>
-                        <td class="text-left">{{kayak.weight}} h</td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Your Waist Width</td>
-                        <td class="text-left">{{kayak.waist}} h</td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Skeg</td>
-                        <td class="text-left">{{kayak.skeg}} h</td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Rudder</td>
-                        <td class="text-left">{{kayak.rudder}} h</td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Hatches</td>
-                        <td class="text-left">{{kayak.hatch}} h</td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Thigh Braces</td>
-                        <td class="text-left">{{kayak.thighBraces}} h</td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Delivery Location</td>
-                        <td class="text-left">{{this.Location}} h</td>
-                      </tr>
-                    </tbody>
-                  </template>
-                </v-simple-table>
-              
+                <v-spacer></v-spacer>
+                <p class="text-left body-2 text--grey-darken-2" >Material:          {{this.Materials}}</p>
+                <p class="text-left body-2">Location:          {{this.Location}}</p>
+                <p class="text-left body-2">Your Height:       {{this.HumanHeight}}</p>
+                <p class="text-left body-2">Your Weight:       {{this.HumanWeight}}</p>
+                <p class="text-left body-2">Your Waist Width:  {{this.waist}}</p>
+                <p class="text-left body-2">Skeg:              {{this.Skeg}}</p>
+                <p class="text-left body-2">Rudder:            {{this.Rudder}}</p>
+                <p class="text-left body-2">Hatches:           {{this.Hatches}}</p>
+
             </v-col>
             <v-col :md=6 :xs=12 >
               <small>kayak</small>
@@ -263,7 +230,6 @@
           </v-layout>
             </v-col>
             <v-col :md=3 :xs=12>
-              <p v-for="kayak in prototype2" :key="kayak.id" v-text="kayak.stature"></p>
               <small>co2 etc</small>
               <!-- co2 cost etc -->
             </v-col>
@@ -275,7 +241,7 @@
         <v-btn class= "ma-2 teal--text" @click="e1 = 6">
             Back
           </v-btn>
-          <v-btn  class= "ma-2 teal--text" @click="submitOrder()">Submit Order</v-btn>
+          <v-btn  class= "ma-2 teal--text" v-for="kayak in prototype2" :key="kayak.id" @click="submitOrder(kayak.cad,kayak.variant)">Submit Order</v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -288,6 +254,7 @@
 </template>
 <script>
   import db from '@/fb'
+  import firebase from 'firebase'
   import { ModelStl } from 'vue-3d-model'
 
 export default {
@@ -495,13 +462,14 @@ methods:{
       })
     })
   },
-  submitOrder() {
+  submitOrder(cad,variant) {
      this.prototype2=[]
-     this.users=[]
+     let user = firebase.auth().currentUser
+     
         const Order = { 
-          customer: this.uid,
-          modelNumber: this.variant,
-          STL: this.cad,
+          customer: user.uid,
+          modelNumber: variant,
+          STL: cad,
           material: this.Materials,
           deliveryLocation: this.Location
           

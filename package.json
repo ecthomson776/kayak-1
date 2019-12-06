@@ -15,6 +15,7 @@
     "vue": "^2.6.10",
     "vue-3d-model": "^1.2.2",
     "vue-router": "^3.0.3",
+    "vueperslides": "^2.1.0",
     "vuetify": "^2.1.0"
   },
   "devDependencies": {

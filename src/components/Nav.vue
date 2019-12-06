@@ -1,10 +1,18 @@
 <template>
     <nav>
         <v-app-bar app class="white" >
+            <v-img
+                class="mx-2"
+                src="https://firebasestorage.googleapis.com/v0/b/kustam-kayaks.appspot.com/o/kisspng-chalmers-university-of-technology-norwegian-univer-ivanovo-state-university-of-chemistry-and-technolo-5b1699ab78ce89.5016040515282077874948.png?alt=media&token=39c9ffc0-51a8-41ca-965f-c639358f67e3"
+                max-height="40"
+                max-width="40"
+                contain
+            ></v-img>
             <v-toolbar-title class="headline">
         <span class="teal--text">kustAM.kayaks</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
+            
             
             <v-btn v-if="admin" text to="order">
                 <span class="mr-2">Admin</span>
