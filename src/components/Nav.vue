@@ -9,7 +9,9 @@
                 contain
             ></v-img>
             <v-toolbar-title class="headline">
-        <span class="teal--text">kustAM.kayaks</span>
+                <v-btn text to="/">
+        <span class="teal--text text-none headline">kustAM.kayaks</span>
+                </v-btn>
             </v-toolbar-title>
             <v-spacer></v-spacer>
             

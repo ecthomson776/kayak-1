@@ -213,21 +213,24 @@
             <v-col :md=6 :xs=12 >
               <small>kayak</small>
               <model-stl  v-for="kayak in prototype2" :key="kayak.id" :src="kayak.cad"></model-stl>
-              <v-layout row wrap> 
-              <v-flex xs12 md4 class="px-3">
-              <div class="caption grey--text">Length</div>
-              <div v-for="kayak in prototype2" :key="kayak.id">{{ kayak.length }}</div>
-            </v-flex>
-            <v-flex xs12 md4 class="px-3">
-              <div class="caption grey--text">Width</div>
-              <div v-for="kayak in prototype2" :key="kayak.id">{{ kayak.width }}</div>
-            </v-flex>
-            <v-flex xs12 md4>
-              <div class="caption grey--text">Weight</div>
-              <!-- <div>{{ calculation }}</div>  -->
-            </v-flex>
-            
-          </v-layout>
+              <v-simple-table contain>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">Length</th>
+                      <th class="text-left">Width</th>
+                      <th class="text-left">Weight</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="kayak in prototype2" :key="kayak.id">
+                      <td>{{ kayak.length }}</td>
+                      <td>{{ kayak.width }}</td>
+                      <td>calculation</td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
             </v-col>
             <v-col :md=3 :xs=12>
               <small>co2 etc</small>
