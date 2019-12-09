@@ -212,29 +212,18 @@
             </v-col>
             <v-col :md=6 :xs=12 >
               <small>kayak</small>
-              <model-stl  v-for="kayak in prototype2" :key="kayak.id" :src="kayak.cad"></model-stl>
-              <v-simple-table contain>
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left">Length</th>
-                      <th class="text-left">Width</th>
-                      <th class="text-left">Weight</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="kayak in prototype2" :key="kayak.id">
-                      <td>{{ kayak.length }}</td>
-                      <td>{{ kayak.width }}</td>
-                      <td>calculation</td>
-                    </tr>
-                  </tbody>
-                </template>
-              </v-simple-table>
+              <model-stl  v-for="kayak in prototype2" :key="kayak.id"  :src="kayak.cad"></model-stl>
             </v-col>
             <v-col :md=3 :xs=12>
-              <small>co2 etc</small>
+              <small>Kayak details</small>
               <!-- co2 cost etc -->
+              <v-spacer></v-spacer>
+                <p class="text-left body-2 text--grey-darken-2" v-for="kayak in prototype2" :key="kayak.id">Length:{{kayak.length}}</p>
+                <p class="text-left body-2" v-for="kayak in prototype2" :key="kayak.id">Width:{{kayak.width}}</p>
+                <p class="text-left body-2" v-for="kayak in prototype2" :key="kayak.id">Weight: {{(weight).toFixed(2)}}</p>
+                <p class="text-left body-2" v-for="kayak in prototype2" :key="kayak.id">Cost: {{(cost).toFixed(2)}}</p>
+                <p class="text-left body-2" v-for="kayak in prototype2" :key="kayak.id" >CO2: {{(co2).toFixed(2)}}</p>
+                <p class="text-left body-2">Delivery Time: {{(deliveryTime)}}</p>
             </v-col>
             </v-row>
            
@@ -305,11 +294,12 @@ export default {
           {
             text: "Recycled ABS",
             value:"Recycled ABS",
-
+            density: 1050,
           },
           {
             text: "UPM",
             value: "UPM",
+            density: 1210,
           },
         ],
       HumanHeight: "<1550",
@@ -483,6 +473,53 @@ methods:{
         })
       }
     
-  }}
+  },
+  computed:{
+    deliveryTime: function(){
+      var location = this.Location
+      if (location == "Sweden"){
+        return 'Please allow 3 working days for delivery'
+      } else if (location == "Europe"){
+        return 'Please allow 7 working days for delivery'
+      } else if (location == "Rest of World"){
+        return 'Please allow 14 working days for delivery'
+      }
+    },
+    cost: function(){
+      var material = this.Materials
+      var volume = this.volume
+       // THIS IS WRONG // 
+      if (material == "Recycled ABS"){
+        return 552.1418391 + (14289.78146*volume)
+      } else if (material == "UPM"){
+        return 524.7539547 + (19739.97927*volume)
+      }
+    },
+    co2: function(){
+      var material = this.Materials
+      var volume = this.volume
+       // THIS IS WRONG // 
+      if (material == "Recycled ABS"){
+        return 0.0137615641 + (5987.7014476*volume)
+      } else if (material == "UPM"){
+        return -0.005563195 + (2934.0870755*volume)
+      }      
+    },
+    weight: function(){
+      var material = this.Materials
+      var volume = this.volume
+        // THIS IS WRONG // 
+      if (material == "Recycled ABS"){
+        return 1050*volume
+      } else if (material == "UPM"){
+        return 1210 *volume
+      } else{
+        return 'not working'
+      }
+      
+    }
+
+  }
+  }
   
 </script>
