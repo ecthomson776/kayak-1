@@ -200,14 +200,14 @@
               <small> Your Choices</small>
               <!-- summary of user choices-->
                 <v-spacer></v-spacer>
-                <p class="text-left body-2 text--grey-darken-2" >Material:          {{this.Materials}}</p>
-                <p class="text-left body-2">Location:          {{this.Location}}</p>
-                <p class="text-left body-2">Your Height:       {{this.HumanHeight}}</p>
-                <p class="text-left body-2">Your Weight:       {{this.HumanWeight}}</p>
-                <p class="text-left body-2">Your Waist Width:  {{this.waist}}</p>
-                <p class="text-left body-2">Skeg:              {{this.Skeg}}</p>
-                <p class="text-left body-2">Rudder:            {{this.Rudder}}</p>
-                <p class="text-left body-2">Hatches:           {{this.Hatches}}</p>
+                <p class="text-left body-2 text--grey-darken-2" >Material: {{this.Materials}}</p>
+                <p class="text-left body-2">Location: {{this.Location}}</p>
+                <p class="text-left body-2">Your Height: {{this.HumanHeight}}mm</p>
+                <p class="text-left body-2">Your Weight: {{this.HumanWeight}}kg</p>
+                <p class="text-left body-2">Your Waist Width: {{this.waist}}mm</p>
+                <p class="text-left body-2">Skeg: {{this.Skeg}}</p>
+                <p class="text-left body-2">Rudder: {{this.Rudder}}</p>
+                <p class="text-left body-2">Hatches: {{this.Hatches}}</p>
 
             </v-col>
             <v-col :md=6 :xs=12 >
@@ -217,13 +217,13 @@
             <v-col :md=3 :xs=12>
               <small>Kayak details</small>
               <!-- co2 cost etc -->
-              <v-spacer></v-spacer>
-                <p class="text-left body-2 text--grey-darken-2" v-for="kayak in prototype2" :key="kayak.id">Length:{{kayak.length}}</p>
-                <p class="text-left body-2" v-for="kayak in prototype2" :key="kayak.id">Width:{{kayak.width}}</p>
-                <p class="text-left body-2" v-for="kayak in prototype2" :key="kayak.id">Weight: {{(weight).toFixed(2)}}</p>
-                <p class="text-left body-2" v-for="kayak in prototype2" :key="kayak.id">Cost: {{(cost).toFixed(2)}}</p>
-                <p class="text-left body-2" v-for="kayak in prototype2" :key="kayak.id" >CO2: {{(co2).toFixed(2)}}</p>
-                <p class="text-left body-2">Delivery Time: {{(deliveryTime)}}</p>
+             <br/>
+                <p class="text-left body-2 text--grey-darken-2" v-for="kayak in prototype2" :key="kayak.id">Length:{{kayak.length}}mm</p>
+                <p class="text-left body-2" v-for="kayak in prototype2" :key="kayak.id">Width:{{kayak.width}}mm</p>
+                <p class="text-left body-2" v-for="kayak in prototype2" :key="kayak.id">Weight: {{(weight).toFixed(2)}}kg</p>
+                <p class="text-left body-2" v-for="kayak in prototype2" :key="kayak.id">Cost: {{(cost.toFixed(2))}}€</p>
+                <p class="text-left body-2" v-for="kayak in prototype2" :key="kayak.id" >CO2: {{(co2.toFixed(2))}}kg of CO2</p>
+                <p class="text-left body-2">{{(deliveryTime)}}</p>
             </v-col>
             </v-row>
            
@@ -445,6 +445,7 @@ export default {
 methods:{
   getkayaks () {
      this.prototype2=[]
+     this.volume=[]
      this.e1 = this.e1+1
      db.collection('prototype2').where('stature','==',this.HumanHeight).where('weight','==',this.HumanWeight).where('skeg','==',this.Skeg).where('rudder','==',this.Rudder).where('hatch','==',this.Hatches).get()
     .then(snapshot => {
@@ -452,6 +453,7 @@ methods:{
         let kayak = doc.data()
         kayak.id = doc.id
         this.prototype2.push(kayak)
+        this.volume.push(kayak.volume) //setting this.volume//
       })
     })
   },
@@ -483,8 +485,8 @@ methods:{
         return 'Please allow 7 working days for delivery'
       } else if (location == "Rest of World"){
         return 'Please allow 14 working days for delivery'
-      }
-    },
+      } else return 'Unknown'
+      },
     cost: function(){
       var material = this.Materials
       var volume = this.volume
@@ -493,7 +495,7 @@ methods:{
         return 552.1418391 + (14289.78146*volume)
       } else if (material == "UPM"){
         return 524.7539547 + (19739.97927*volume)
-      }
+      } else return 'Unknown'
     },
     co2: function(){
       var material = this.Materials
@@ -503,7 +505,7 @@ methods:{
         return 0.0137615641 + (5987.7014476*volume)
       } else if (material == "UPM"){
         return -0.005563195 + (2934.0870755*volume)
-      }      
+      } else return 'Unknown'     
     },
     weight: function(){
       var material = this.Materials
@@ -513,9 +515,7 @@ methods:{
         return 1050*volume
       } else if (material == "UPM"){
         return 1210 *volume
-      } else{
-        return 'not working'
-      }
+      } else return 'Unknown'
       
     }
 
