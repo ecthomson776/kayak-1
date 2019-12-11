@@ -35,19 +35,20 @@
       <v-stepper-content step="1">
         <v-form v-model="valid">
           <v-container>
-            <v-card>
+            <v-card class="mx-auto my-3">
     <v-card-title>
       Choose Base Kayak Model 
     </v-card-title>
       <v-spacer></v-spacer>
-      <v-radio-group v-model="Type">
+      <v-radio-group  class= "ma-2" v-model="Type">
               <v-radio
-                label="Melker 1"
+                label="Melker Rödlöga"
                 color="#5DBCD2"
-                value="Melker 1"
+                value="Melker Rödlöga"
               ></v-radio>
               </v-radio-group>
       <v-spacer></v-spacer>
+      <small>The <b>Melker Rödlöga</b> is an innovative kayak designed with rougher waters, currents, tides and surf waves in mind. It is also stable, secure and easily manoeuvrable in calmer waters. This is the perfect kayak to help improve your paddling skills</small>
     </v-card>
           </v-container>
         </v-form>
@@ -132,6 +133,8 @@
                   :items="RudderOptions"
                   label="Rudder"
             ></v-select>
+            <small>A <b>Skeg</b> is a static fin used to keep the kayak straight. </small>
+            <small>A <b>Rudder</b> is an adjustable fin used to aid manoeuvrability. </small>
           </v-card-text>
         </v-card>
 
@@ -146,7 +149,7 @@
       <v-stepper-content step="5">
         <v-card class="mx-auto my-3">
           <v-card-title>
-          Hatches and Bulkheads
+          Hatches
         </v-card-title>
           <v-card-text>
            <v-select
@@ -155,6 +158,7 @@
                   label="Hatches"
                 >
             </v-select>
+            <small> A <b>Hatch</b> is your portal to an inner cargo area.</small>
           </v-card-text>
         </v-card>
 

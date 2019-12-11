@@ -1,5 +1,5 @@
 <template>
-<vueper-slides :dragging-distance="50" :slide-ratio="1/2" fixed-height="650px">
+<vueper-slides :dragging-distance="50" :slide-ratio="1/2" fixed-height="560px">
   <vueper-slide
     v-for="(slide, i) in slides"
     :key="i"
@@ -47,7 +47,7 @@ import 'vueperslides/dist/vueperslides.css'
     background-blend-mode: color;
 }
 .vueperslide__content {
-    font-size: 1em;
+    font-size: 1.5em;
     opacity: .7;
     text-shadow: none;
     color: #000000;

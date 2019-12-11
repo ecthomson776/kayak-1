@@ -4,19 +4,19 @@
     <v-content >
       <router-view></router-view>
     </v-content>
-    <v-footer/>
+    <Footer/>
   </v-app>
 </template>
 
 <script>
 import Nav from '@/components/Nav'
-import footer from '@/components/footer'
+import Footer from '@/components/footer'
 
 
 export default {
   name: 'App',
   components: { Nav,
-   footer },
+   Footer },
   data: () => ({
     //
   }),
