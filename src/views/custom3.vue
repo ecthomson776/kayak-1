@@ -309,27 +309,27 @@ export default {
             density: 1210,
           },
         ],
-      HumanHeight: "<1550",
+      HumanHeight: "<150",
         HumanHeightOptions: [
           {
-            text: "< 155cm",
-            value: "<1550",
+            text: "< 150cm",
+            value: "<150",
           },
           {
             text: "155cm - 165cm",
-            value: "1550 - 1650",
+            value: "155-165",
           },
           {
             text: "166cm - 175cm",
-            value: "1651 - 1750",
+            value: "166-175",
           },
           {
             text: "176cm - 185cm",
-            value: "1751 - 1850",
+            value: "176-185",
           },
           {
             text: "> 185cm ",
-            value: ">1850",
+            value: ">185",
           },
         ],
         HumanWeight: "<55",
@@ -355,49 +355,49 @@ export default {
             value: ">90",
           }
         ],
-        waist: "<700",
+        waist: "<70",
         waistOptions: [
           {
             text: "< 70cm",
-            value: "<700",
+            value: "<70",
           },
           {
             text: "70cm - 80cm",
-            value: "700-800",
+            value: "70-80",
           },
           {
             text: "81cm - 95cm",
-            value: "801-950",
+            value: "81-95",
           },
           {
             text: "96cm - 110cm",
-            value: "951-1100",
+            value: "96-110",
           },
           {
             text: "> 110cm",
-            value: ">1100",
+            value: ">110",
           }
         ],
-        Skeg: 'No',
+        Skeg: "No",
         SkegOptions: [
           {
             text: "No",
-            value: 'No',
+            value: "No",
           },
           {
             text: "Yes",
-            value: 'Yes',
+            value: "Yes",
           },
         ],
-        Rudder: 'No',
+        Rudder: "No",
         RudderOptions: [
           {
             text: "No",
-            value: 'No',
+            value: "No",
           },
           {
             text: "Yes",
-            value: 'Yes',
+            value: "Yes",
           },
         ],
         Hatches: "Day Hatch on left side",
