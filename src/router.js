@@ -6,6 +6,7 @@ import Custom2 from './views/custom2.vue'
 import Custom3 from './views/custom3.vue'
 import Thanks from './views/Thanks.vue'
 import Order from './views/order.vue'
+import OrderComplete from './views/ordercomplete.vue'
 import Signup from './components/auth/Signup'
 import Login from './components/auth/Login'
 import firebase from 'firebase'
@@ -44,6 +45,14 @@ const router = new Router({
       path: '/order',
       name: 'order',
       component: Order,
+      meta: {
+        requiresAuth: true }
+      
+    },
+    {
+      path: '/ordercomplete',
+      name: 'ordercomplete',
+      component: OrderComplete,
       meta: {
         requiresAuth: true }
       

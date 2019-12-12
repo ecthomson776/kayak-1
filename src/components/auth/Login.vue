@@ -67,7 +67,7 @@ export default {
             .then(cred =>{
                 // eslint-disable-next-line
                 console.log(cred)
-                this.$router.push({name: 'home'})
+                this.$router.push({name: 'custom3'})
             }).catch(err => {
                 this.feedback = err.message
             })

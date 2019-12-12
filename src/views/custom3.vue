@@ -70,6 +70,9 @@
               prepend-icon="mdi-select"
                   
             ></v-select>
+            <small><b>UPM</b> is a cellulose fiber filled plastic composite. It is the most sustainable option.</small>
+            <br>
+            <small><b>Recycled ABS</b> is a plastic. It is the cheaper option.</small>
         </v-card-text>
             <v-btn class= "ma-2 teal--text"
             @click="e1 = 1"
@@ -190,7 +193,7 @@
           >
             Back
           </v-btn>
-          <v-btn  class= "ma-2 teal--text"  @click="getkayaks()">>Next Step</v-btn>
+          <v-btn  class= "ma-2 teal--text"  @click="getkayaks()">Next Step</v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="7" >
@@ -470,7 +473,8 @@ methods:{
           modelNumber: variant,
           STL: cad,
           material: this.Materials,
-          deliveryLocation: this.Location
+          deliveryLocation: this.Location,
+          status: ''
           
         }
         db.collection('Orders').add(Order).then(() => {

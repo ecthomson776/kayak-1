@@ -100,7 +100,7 @@ export default {
                 }) 
                 
             }).then(() => {
-                this.$router.push({ name: 'home' })
+                this.$router.push({ name: 'custom3' })
             })
             .catch(err => {
               this.feedback = err.message

@@ -20,7 +20,7 @@ import 'vueperslides/dist/vueperslides.css'
   data: () => ({
   slides: [
     { title: 'Kayak Customiser', content: 'Click here to configure your 3D printed kayak!', link: '/custom3', image:'https://firebasestorage.googleapis.com/v0/b/kustam-kayaks.appspot.com/o/IMG_3153.JPG?alt=media&token=690d9c27-0cec-48d4-9ec6-12772dba56ad' },
-    { title: 'Kayak Customiser', content: 'Click here to configure your 3D printed kayak!', link: '/custom3', image:'https://firebasestorage.googleapis.com/v0/b/kustam-kayaks.appspot.com/o/IMG_3281.JPG?alt=media&token=6e0abcdb-5f17-443e-a2ca-a83891c823dc' },
+    { title: 'Kayak Customiser', content: 'Click here to configure your 3D printed kayak!', link: '/custom3', image:'https://firebasestorage.googleapis.com/v0/b/kustam-kayaks.appspot.com/o/IMG_2938%20(1).JPG?alt=media&token=8b2a5769-2d3f-44ee-a015-e43cf8c746c2' },
   ]
 })
 }
