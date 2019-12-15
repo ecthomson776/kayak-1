@@ -14,7 +14,7 @@
           <th class="text-left">Model Number</th>
           <th class="text-left">Delivery Location</th>
           <th class="text-left">Material</th>
-          <th class="text-left">STL File</th>
+          <th class="text-left">CAD File</th>
           <th class="text-left">Completed?</th>
         </tr>
       </thead>
@@ -25,7 +25,7 @@
           <td>{{ order.modelNumber }}</td>
           <td>{{ order.deliveryLocation }}</td>
           <td>{{ order.material }}</td>
-          <td><a :href=" order.STL">Download File</a></td>
+          <td><a :href=" order.CAD">Download File</a></td>
           <td><v-btn text icon color="teal" @click="completed(order.id)"> <v-icon>mdi-clipboard-check-multiple-outline</v-icon> </v-btn></td>
         </tr>
       </tbody>

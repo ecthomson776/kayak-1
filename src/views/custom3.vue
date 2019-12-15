@@ -209,9 +209,9 @@
                 <v-spacer></v-spacer>
                 <p class="text-left body-2 text--grey-darken-2" >Material: {{this.Materials}}</p>
                 <p class="text-left body-2">Location: {{this.Location}}</p>
-                <p class="text-left body-2">Your Height: {{this.HumanHeight}}mm</p>
+                <p class="text-left body-2">Your Height: {{this.HumanHeight}}cm</p>
                 <p class="text-left body-2">Your Weight: {{this.HumanWeight}}kg</p>
-                <p class="text-left body-2">Your Waist Width: {{this.waist}}mm</p>
+                <p class="text-left body-2">Your Waist Width: {{this.waist}}cm</p>
                 <p class="text-left body-2">Skeg: {{this.Skeg}}</p>
                 <p class="text-left body-2">Rudder: {{this.Rudder}}</p>
                 <p class="text-left body-2">Hatches: {{this.Hatches}}</p>
@@ -219,6 +219,7 @@
             </v-col>
             <v-col :md=6 :xs=12 >
               <small>kayak</small>
+              <!-- <v-img v-for="kayak in prototype2" :key="kayak.id"  :src="kayak.image"></v-img>-->   
               <model-stl  v-for="kayak in prototype2" :key="kayak.id"  :src="kayak.cad"></model-stl>
             </v-col>
             <v-col :md=3 :xs=12>
@@ -393,7 +394,7 @@ export default {
         RudderOptions: [
           {
             text: "No",
-            value: "No",
+            value: 'No',
           },
           {
             text: "Yes",
@@ -428,7 +429,7 @@ export default {
           },
           {
             text: "No Storage",
-            value: "No Storage",
+            value: "No storage",
           },
         ],
         
@@ -454,7 +455,7 @@ methods:{
      this.prototype2=[]
      this.volume=[]
      this.e1 = this.e1+1
-     db.collection('prototype2').where('stature','==',this.HumanHeight).where('weight','==',this.HumanWeight).where('skeg','==',this.Skeg).where('rudder','==',this.Rudder).where('hatch','==',this.Hatches).get()
+     db.collection('prototype2').where('stature','==',this.HumanHeight).where('weight','==',this.HumanWeight).where('waist','==',this.waist).where('skeg','==',this.Skeg).where('rudder','==',this.Rudder).where('hatch','==',this.Hatches).get()
     .then(snapshot => {
       snapshot.forEach(doc =>{
         let kayak = doc.data()
@@ -471,7 +472,7 @@ methods:{
         const Order = { 
           customer: user.uid,
           modelNumber: variant,
-          STL: cad,
+          CAD: cad,
           material: this.Materials,
           deliveryLocation: this.Location,
           status: ''
